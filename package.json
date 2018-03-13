@@ -1,6 +1,6 @@
 {
   "name": "parse-json-bignumber",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "dependencies": {},
   "scripts": {
     "build": "rm -rf ./dist && tsc -p ./ && babel ./dist/parse-json-bignumber.js -o ./dist/parse-json-bignumber.min.js",
