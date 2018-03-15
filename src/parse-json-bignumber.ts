@@ -82,8 +82,11 @@ const create = function (options?) {
             if (!isFinite(number)) {
                 error('Bad number');
             } else {
-                if (string.length > 15)
+                if (string.length > 15) {
                     return string;
+                } else {
+                    return number
+                }
             }
         },
 
