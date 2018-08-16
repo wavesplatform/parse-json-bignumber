@@ -3,3 +3,6 @@
 **/*.js.map
 node_modules
 dist
+coverage
+dist
+

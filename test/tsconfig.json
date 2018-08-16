@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "sourceMap": true,
+    "module": "none",
+    "lib": [
+      "es2015.promise",
+      "es5"
+    ],
+    "typeRoots": [
+      "../node_modules/@types"
+    ]
+  }
+}

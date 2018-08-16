@@ -263,45 +263,7 @@ const create = function (options?) {
     }
 
     function checkIsBigNumber(some) {
-        const methods = [
-            "absoluteValue", "abs",
-            "comparedTo",
-            "decimalPlaces", "dp",
-            "dividedBy", "div",
-            "dividedToIntegerBy", "idiv",
-            "exponentiatedBy", "pow",
-            "integerValue",
-            "isEqualTo", "eq",
-            "isFinite",
-            "isGreaterThan", "gt",
-            "isGreaterThanOrEqualTogte",
-            "isInteger",
-            "isLessThan", "lt",
-            "isLessThanOrEqualTo", "lte",
-            "isNaN",
-            "isNegative",
-            "isPositive",
-            "isZero",
-            "minus",
-            "modulo", "mod",
-            "multipliedBy", "times",
-            "negated",
-            "plus",
-            "precision", "sd",
-            "shiftedBy",
-            "squareRoot", "sqrt",
-            "toExponential",
-            "toFixed",
-            "toFormat",
-            "toFraction",
-            "toJSON",
-            "toNumber",
-            "toPrecision",
-            "toString",
-            "valueOf"
-        ];
-
-        return some && typeof some === 'object' && methods.every(m => m in some);
+        return some && (options.BigNumber ? some instanceof options.BigNumber || options.BigNumber.isBigNumber(some) : false);
     }
 
     function str(key, holder) {
