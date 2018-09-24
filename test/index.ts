@@ -31,6 +31,10 @@ describe('lib', () => {
             stringify = create({ BigNumber }).stringify;
         });
 
+        it('stringify with quote', () => {
+            expect(stringify({ a: '"' })).toBe('{"a":"\\\""}');
+        });
+
         it('with big number', () => {
 
             const data = {
