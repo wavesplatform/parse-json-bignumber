@@ -85,7 +85,7 @@ const create = function (options?) {
                 if (string.length > 15) {
                     return string;
                 } else {
-                    return number
+                    return number;
                 }
             }
         },
@@ -241,13 +241,13 @@ const create = function (options?) {
     var gap;
     var indent;
     var meta = { // table of character substitutions
-        "\b": "\\b",
-        "\t": "\\t",
-        "\n": "\\n",
-        "\f": "\\f",
-        "\r": "\\r",
-        "\"": "\\\"",
-        "\\": "\\\\"
+        '\b': '\\b',
+        '\t': '\\t',
+        '\n': '\\n',
+        '\f': '\\f',
+        '\r': '\\r',
+        '"': '\\"',
+        '\\': '\\\\'
     };
     var rep;
 
@@ -261,13 +261,13 @@ const create = function (options?) {
 
         rx_escapable.lastIndex = 0;
         return rx_escapable.test(string) ?
-            "\"" + string.replace(rx_escapable, function (a) {
+            '"' + string.replace(rx_escapable, function (a) {
                 var c = meta[a];
-                return typeof c === "string" ?
+                return typeof c === 'string' ?
                     c :
-                    "\\u" + ("0000" + a.charCodeAt(0).toString(16)).slice(-4);
-            }) + "\"" :
-            "\"" + string + "\"";
+                    '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
+            }) + '"' :
+            '"' + string + '"';
     }
 
     function checkIsBigNumber(some) {
@@ -295,37 +295,40 @@ const create = function (options?) {
 
         // If the value has a toJSON method, call it to obtain a replacement value.
 
-        if (value && typeof value === "object" &&
-            typeof value.toJSON === "function") {
+        if (value && typeof value === 'object' &&
+            typeof value.toFixed === 'function') {
+            value = value.toFixed();
+        } else if (value && typeof value === 'object' &&
+            typeof value.toJSON === 'function') {
             value = value.toJSON(key);
         }
 
         // If we were called with a replacer function, then call the replacer to
         // obtain a replacement value.
 
-        if (typeof rep === "function") {
+        if (typeof rep === 'function') {
             value = rep.call(holder, key, value);
         }
 
         // What happens next depends on the value's type.
 
         switch (typeof value) {
-            case "string":
+            case 'string':
                 if (isBigNumber) {
                     return value;
                 } else {
                     return quote(value);
                 }
 
-            case "number":
+            case 'number':
 
                 // JSON numbers must be finite. Encode non-finite numbers as null.
 
                 return isFinite(value) ?
                     String(value) :
-                    "null";
+                    'null';
 
-            case "boolean":
+            case 'boolean':
 
                 // If the value is a boolean or null, convert it to a string. Note:
                 // typeof null does not produce "null". The case is included here in
@@ -336,13 +339,13 @@ const create = function (options?) {
             // If the type is "object", we might be dealing with an object or an array or
             // null.
 
-            case "object":
+            case 'object':
 
                 // Due to a specification blunder in ECMAScript, typeof null is "object",
                 // so watch out for that case.
 
                 if (!value) {
-                    return "null";
+                    return 'null';
                 }
 
                 // Make an array to hold the partial results of stringifying this object value.
@@ -352,41 +355,41 @@ const create = function (options?) {
 
                 // Is the value an array?
 
-                if (Object.prototype.toString.apply(value) === "[object Array]") {
+                if (Object.prototype.toString.apply(value) === '[object Array]') {
 
                     // The value is an array. Stringify every element. Use null as a placeholder
                     // for non-JSON values.
 
                     length = value.length;
                     for (i = 0; i < length; i += 1) {
-                        partial[i] = str(i, value) || "null";
+                        partial[i] = str(i, value) || 'null';
                     }
 
                     // Join all of the elements together, separated with commas, and wrap them in
                     // brackets.
 
                     v = partial.length === 0 ?
-                        "[]" :
+                        '[]' :
                         gap ?
-                            "[\n" + gap + partial.join(",\n" + gap) + "\n" + mind + "]" :
-                            "[" + partial.join(",") + "]";
+                            '[\n' + gap + partial.join(',\n' + gap) + '\n' + mind + ']' :
+                            '[' + partial.join(',') + ']';
                     gap = mind;
                     return v;
                 }
 
                 // If the replacer is an array, use it to select the members to be stringified.
 
-                if (rep && typeof rep === "object") {
+                if (rep && typeof rep === 'object') {
                     length = rep.length;
                     for (i = 0; i < length; i += 1) {
-                        if (typeof rep[i] === "string") {
+                        if (typeof rep[i] === 'string') {
                             k = rep[i];
                             v = str(k, value);
                             if (v) {
                                 partial.push(quote(k) + (
                                     gap ?
-                                        ": " :
-                                        ":"
+                                        ': ' :
+                                        ':'
                                 ) + v);
                             }
                         }
@@ -401,8 +404,8 @@ const create = function (options?) {
                             if (v) {
                                 partial.push(quote(k) + (
                                     gap ?
-                                        ": " :
-                                        ":"
+                                        ': ' :
+                                        ':'
                                 ) + v);
                             }
                         }
@@ -413,10 +416,10 @@ const create = function (options?) {
                 // and wrap them in braces.
 
                 v = partial.length === 0 ?
-                    "{}" :
+                    '{}' :
                     gap ?
-                        "{\n" + gap + partial.join(",\n" + gap) + "\n" + mind + "}" :
-                        "{" + partial.join(",") + "}";
+                        '{\n' + gap + partial.join(',\n' + gap) + '\n' + mind + '}' :
+                        '{' + partial.join(',') + '}';
                 gap = mind;
                 return v;
         }
@@ -431,20 +434,20 @@ const create = function (options?) {
         // produce text that is more easily readable.
 
         var i;
-        gap = "";
-        indent = "";
+        gap = '';
+        indent = '';
 
         // If the space parameter is a number, make an indent string containing that
         // many spaces.
 
-        if (typeof space === "number") {
+        if (typeof space === 'number') {
             for (i = 0; i < space; i += 1) {
-                indent += " ";
+                indent += ' ';
             }
 
             // If the space parameter is a string, it will be used as the indent string.
 
-        } else if (typeof space === "string") {
+        } else if (typeof space === 'string') {
             indent = space;
         }
 
@@ -452,17 +455,17 @@ const create = function (options?) {
         // Otherwise, throw an error.
 
         rep = replacer;
-        if (replacer && typeof replacer !== "function" &&
-            (typeof replacer !== "object" ||
-                typeof replacer.length !== "number")) {
-            throw new Error("JSON.stringify");
+        if (replacer && typeof replacer !== 'function' &&
+            (typeof replacer !== 'object' ||
+                typeof replacer.length !== 'number')) {
+            throw new Error('JSON.stringify');
         }
 
         // Make a fake root object containing our value under the key of "".
         // Return the result of stringifying the value.
 
-        return str("", {
-            "": value
+        return str('', {
+            '': value
         });
     };
 
@@ -496,7 +499,7 @@ const create = function (options?) {
             : result;
     };
 
-    return { parse, stringify }
+    return { parse, stringify };
 };
 
 export = create;

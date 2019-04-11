@@ -47,10 +47,11 @@ describe('lib', () => {
         it('with big number', () => {
 
             const data = {
-                a: new BigNumber('1000000001')
+                a: new BigNumber('9999999999999999999999999999999999.99999999999999')
             };
 
-            expect(stringify(data)).toBe('{"a":1000000001}');
+            const result = stringify(data);
+            expect(result).toBe('{"a":9999999999999999999999999999999999.99999999999999}');
         });
 
     });
