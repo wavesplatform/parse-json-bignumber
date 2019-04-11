@@ -1,6 +1,6 @@
 {
   "name": "parse-json-bignumber",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "dependencies": {},
   "main": "dist/parse-json-bignumber.min.js",
   "scripts": {
