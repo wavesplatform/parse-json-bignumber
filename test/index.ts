@@ -1,6 +1,13 @@
 import * as create from '../src/parse-json-bignumber';
 import BigNumber from 'bignumber.js';
 
+// @ts-ignore
+let options: IOptions = {
+    strict: false,
+    parse: (long: string) => new BigNumber(long),
+    stringify: (long) => long.toFixed(),
+    isInstance: (some) => some && (some instanceof BigNumber || BigNumber.isBigNumber(some))
+};
 
 describe('lib', () => {
 
@@ -14,13 +21,27 @@ describe('lib', () => {
         it('without big num', () => {
 
             const json = '{"a": 123}';
-            expect(parse(json)).toEqual({ a: 123 });
+            expect(parse(json)).toEqual({a: 123});
         });
 
         it('with big number', () => {
 
-            const json = '{"a": 123123123123213213123}';
-            expect(parse(json)).toEqual({ a: '123123123123213213123' });
+            const json = '{"a": 12312312312321321312312312312312321321312312312312312321321312}';
+            expect(parse(json)).toEqual({a: '12312312312321321312312312312312321321312312312312312321321312'});
+        });
+    });
+
+
+    describe('parse to bigNum', () => {
+
+        let parse;
+        beforeEach(() => {
+            parse = create(options).parse;
+        });
+
+        it('with big number', () => {
+            const json = '{"a": 12312312312321321312312312312312321321312312312312312321321312}';
+            expect(parse(json)).toEqual({a: new BigNumber('12312312312321321312312312312312321321312312312312312321321312')});
         });
     });
 
@@ -28,11 +49,11 @@ describe('lib', () => {
 
         let stringify;
         beforeEach(() => {
-            stringify = create({ BigNumber }).stringify;
+            stringify = create(options).stringify;
         });
 
         it('stringify with quote', () => {
-            expect(stringify({ a: '"' })).toBe('{"a":"\\\""}');
+            expect(stringify({a: '"'})).toBe('{"a":"\\\""}');
         });
 
         it('with big number', () => {

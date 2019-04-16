@@ -1,4 +1,4 @@
-const create = function (options?) {
+const create = function <T>(options?: IOptions<T>) {
     'use strict';
 
     var _options = {
@@ -79,6 +79,9 @@ const create = function (options?) {
                 }
             }
             number = +string;
+            if (options && options.parse) {
+                return options.parse(string)
+            }
             if (!isFinite(number)) {
                 error('Bad number');
             } else {
@@ -270,9 +273,9 @@ const create = function (options?) {
             '"' + string + '"';
     }
 
-    function checkIsBigNumber(some) {
-        return some && (options.BigNumber ? some instanceof options.BigNumber || options.BigNumber.isBigNumber(some) : false);
-    }
+    // function checkIsBigNumber(some) {
+    //     return some && (options.BigNumber ? some instanceof options.BigNumber || options.BigNumber.isBigNumber(some) : false);
+    // }
 
     function str(key, holder) {
 
@@ -285,7 +288,7 @@ const create = function (options?) {
         var mind = gap;
         var partial;
         var value = holder[key];
-        var isBigNumber = checkIsBigNumber(value);
+        var isBigNumber = options.isInstance(value);
 
         // Check for NaN and Infinity
 
@@ -295,9 +298,8 @@ const create = function (options?) {
 
         // If the value has a toJSON method, call it to obtain a replacement value.
 
-        if (value && typeof value === 'object' &&
-            typeof value.toFixed === 'function') {
-            value = value.toFixed();
+        if (isBigNumber) {
+            value = options.stringify(value);
         } else if (value && typeof value === 'object' &&
             typeof value.toJSON === 'function') {
             value = value.toJSON(key);
@@ -470,6 +472,7 @@ const create = function (options?) {
     };
 
     const parse = function (source, reviver?) {
+
         var result;
 
         text = source + '';
@@ -480,7 +483,6 @@ const create = function (options?) {
         if (ch) {
             error('Syntax error');
         }
-
         return typeof reviver === 'function'
             ? (function walk(holder, key) {
                 var k, v, value = holder[key];
@@ -495,11 +497,18 @@ const create = function (options?) {
                     });
                 }
                 return reviver.call(holder, key, value);
-            }({ '': result }, ''))
+            }({'': result}, ''))
             : result;
     };
 
-    return { parse, stringify };
+    return {parse, stringify};
 };
 
 export = create;
+
+interface IOptions<T> {
+    strict: boolean;
+    parse: (long: string) => T;
+    stringify: (long: T) => string;
+    isInstance: (some: any) => some is T;
+}
