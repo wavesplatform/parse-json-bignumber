@@ -273,10 +273,6 @@ const create = function <T>(options?: IOptions<T>) {
             '"' + string + '"';
     }
 
-    // function checkIsBigNumber(some) {
-    //     return some && (options.BigNumber ? some instanceof options.BigNumber || options.BigNumber.isBigNumber(some) : false);
-    // }
-
     function str(key, holder) {
 
         // Produce a string from holder[key].
@@ -288,7 +284,7 @@ const create = function <T>(options?: IOptions<T>) {
         var mind = gap;
         var partial;
         var value = holder[key];
-        var isBigNumber = options.isInstance(value);
+        var isBigNumber = options && options.isInstance && options.isInstance(value);
 
         // Check for NaN and Infinity
 

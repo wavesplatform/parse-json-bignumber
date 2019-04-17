@@ -44,8 +44,39 @@ describe('lib', () => {
             expect(parse(json)).toEqual({a: new BigNumber('12312312312321321312312312312312321321312312312312312321321312')});
         });
     });
-
     describe('stringify', () => {
+
+        let stringify;
+        beforeEach(() => {
+            stringify = create().stringify;
+        });
+
+        it('stringify with quote', () => {
+            expect(stringify({a: '"'})).toBe('{"a":"\\\""}');
+        });
+
+        it('with big number', () => {
+
+            const data = {
+                a: new BigNumber(123)
+            };
+
+            expect(stringify(data)).toBe('{"a":"123"}');
+        });
+
+        it('with big number', () => {
+
+            const data = {
+                a: new BigNumber('123123123123123.99999999999999')
+            };
+
+            const result = stringify(data);
+            expect(result).toBe('{"a":"1231231231231.99999999999999"}');
+        });
+
+    });
+
+    describe('stringify to big num', () => {
 
         let stringify;
         beforeEach(() => {
