@@ -60,18 +60,19 @@ describe('lib', () => {
             const data = {
                 a: new BigNumber(123)
             };
-
-            expect(stringify(data)).toBe('{"a":"123"}');
+            
+            const result = stringify(data);
+            expect(JSON.parse(result)).toEqual({a: {...data.a}});
         });
 
         it('with big number', () => {
 
             const data = {
-                a: new BigNumber('123123123123123.99999999999999')
+                a: new BigNumber('99999999999999999999999999999999999999999999999999999999.99999999999999')
             };
 
             const result = stringify(data);
-            expect(result).toBe('{"a":"1231231231231.99999999999999"}');
+            expect(JSON.parse(result)).toEqual({a: {...data.a}});
         });
 
     });
