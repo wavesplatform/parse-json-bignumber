@@ -44,6 +44,7 @@ describe('lib', () => {
             expect(parse(json)).toEqual({a: new BigNumber('12312312312321321312312312312312321321312312312312312321321312')});
         });
     });
+
     describe('stringify', () => {
 
         let stringify;
@@ -55,14 +56,19 @@ describe('lib', () => {
             expect(stringify({a: '"'})).toBe('{"a":"\\\""}');
         });
 
+        it('stringify with standard toJson', () => {
+            let date = new Date();
+            expect(stringify({a: date})).toBe(`{"a":"${date.toJSON()}"}`);
+        });
+
         it('with big number', () => {
 
             const data = {
                 a: new BigNumber(123)
             };
-            
+
             const result = stringify(data);
-            expect(JSON.parse(result)).toEqual({a: {...data.a}});
+            expect(result).toEqual(JSON.stringify({a: data.a}));
         });
 
         it('with big number', () => {
@@ -72,7 +78,7 @@ describe('lib', () => {
             };
 
             const result = stringify(data);
-            expect(JSON.parse(result)).toEqual({a: {...data.a}});
+            expect(result).toEqual(JSON.stringify({a: data.a}));
         });
 
     });
@@ -86,6 +92,11 @@ describe('lib', () => {
 
         it('stringify with quote', () => {
             expect(stringify({a: '"'})).toBe('{"a":"\\\""}');
+        });
+
+        it('stringify with standard toJson', () => {
+            let date = new Date();
+            expect(stringify({a: date})).toBe(`{"a":"${date.toJSON()}"}`);
         });
 
         it('with big number', () => {

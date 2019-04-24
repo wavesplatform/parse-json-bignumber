@@ -297,10 +297,10 @@ const create = function <T>(options?: IOptions<T>) {
         if (isBigNumber) {
             value = options.stringify(value);
         }
-        // else if (value && typeof value === 'object' &&
-        //     typeof value.toJSON === 'function') {
-        //     value = value.toJSON(key);
-        // }
+        else if (value && typeof value === 'object' &&
+            typeof value.toJSON === 'function') {
+            value = value.toJSON(key);
+        }
 
         // If we were called with a replacer function, then call the replacer to
         // obtain a replacement value.
