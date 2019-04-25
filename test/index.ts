@@ -1,12 +1,19 @@
 import * as create from '../src/parse-json-bignumber';
 import BigNumber from 'bignumber.js';
 
-// @ts-ignore
-let options: IOptions = {
+
+interface IOptions<T> {
+    strict: boolean;
+    parse: (long: string) => T;
+    stringify: (long: T) => string;
+    isInstance: (some: any) => some is T;
+}
+
+let options: IOptions<BigNumber> = {
     strict: false,
-    parse: (long: string) => new BigNumber(long),
-    stringify: (long) => long.toFixed(),
-    isInstance: (some) => some && (some instanceof BigNumber || BigNumber.isBigNumber(some))
+    parse: (long: string): BigNumber => new BigNumber(long),
+    stringify: (long: BigNumber): string => long.toFixed(),
+    isInstance: (some): some is BigNumber => some && (some instanceof BigNumber || BigNumber.isBigNumber(some))
 };
 
 describe('lib', () => {
@@ -68,7 +75,7 @@ describe('lib', () => {
             };
 
             const result = stringify(data);
-            expect(result).toEqual(JSON.stringify({a: data.a}));
+            expect(result).toBe(JSON.stringify({a: data.a}));
         });
 
         it('with big number', () => {
@@ -78,7 +85,7 @@ describe('lib', () => {
             };
 
             const result = stringify(data);
-            expect(result).toEqual(JSON.stringify({a: data.a}));
+            expect(result).toBe(JSON.stringify({a: data.a}));
         });
 
     });
