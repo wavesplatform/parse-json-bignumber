@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "dependencies": {},
   "main": "dist/parse-json-bignumber.min.js",
-  "types": "dist/parse-json-",
+  "types": "dist/parse-json-bignumber.d.ts",
   "scripts": {
     "build": "rm -rf ./dist && tsc -p ./ && babel ./dist/parse-json-bignumber.js -o ./dist/parse-json-bignumber.min.js",
     "prepare": "npm run test && npm run build",
