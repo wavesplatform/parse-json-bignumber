@@ -1,6 +1,6 @@
 {
   "name": "@waves/parse-json-bignumber",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "dependencies": {},
   "main": "dist/parse-json-bignumber.min.js",
   "types": "dist/parse-json-bignumber.d.ts",
