@@ -424,7 +424,7 @@ const create = function <T>(options?: IOptions<T>) {
         }
     }
 
-    const stringify = (value, replacer, space) => {
+    const stringify = (value, replacer?, space?) => {
 
         // The stringify method takes a value and an optional replacer, and an optional
         // space parameter, and returns a JSON text. The replacer can be a function
