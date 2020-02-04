@@ -273,7 +273,7 @@ const create = function <T>(options?: IOptions<T>) {
             '"' + string + '"';
     }
 
-    function str(key, holder) {
+    function str(key: string, holder: object): string {
 
         // Produce a string from holder[key].
 
@@ -424,7 +424,7 @@ const create = function <T>(options?: IOptions<T>) {
         }
     }
 
-    const stringify = (value, replacer?, space?) => {
+    const stringify = (value: any, replacer?: ((holder: object, key: string, value: any) => string) | string[], space?: number | string): string => {
 
         // The stringify method takes a value and an optional replacer, and an optional
         // space parameter, and returns a JSON text. The replacer can be a function
@@ -468,7 +468,7 @@ const create = function <T>(options?: IOptions<T>) {
         });
     };
 
-    const parse = function (source, reviver?) {
+    const parse = function (source: string, reviver?: (holder: object, key: string, value: any) => any) {
 
         var result;
 
